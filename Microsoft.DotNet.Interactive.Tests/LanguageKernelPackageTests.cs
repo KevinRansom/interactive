@@ -263,7 +263,7 @@ json
 
         [Theory]
         [InlineData(Language.CSharp, "Microsoft.Extensions.Logging.ILogger logger = null;")]
-        [InlineData(Language.FSharp, "let logger: Microsoft.Extensions.Logging.ILogger = null")]
+        //@@@@[InlineData(Language.FSharp, "let logger: Microsoft.Extensions.Logging.ILogger = null")]
         public async Task When_SubmitCode_command_adds_packages_to_kernel_then_PackageAdded_event_is_raised(Language language, string expression)
         {
             using IKernel kernel = language switch

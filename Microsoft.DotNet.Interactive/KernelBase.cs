@@ -318,7 +318,9 @@ namespace Microsoft.DotNet.Interactive
 
             _disposables.Add(disposable);
         }
-   
+
+        protected abstract void AddScriptReferences(IReadOnlyList<ResolvedPackageReference> assemblyPaths);
+
         protected abstract Task HandleSubmitCode(
             SubmitCode command, 
             KernelInvocationContext context);
