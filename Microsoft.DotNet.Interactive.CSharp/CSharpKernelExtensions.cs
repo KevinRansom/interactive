@@ -225,23 +225,10 @@ using static {typeof(Kernel).FullName};
                         }
                     }
 
-                    var helper = kernel.NativeAssemblyLoadHelper;
-
                     var result = await restorePackagesTask;
 
                     if (result.Succeeded)
                     {
-                        var nativeLibraryProbingPaths = result.NativeLibraryProbingPaths;
-                        helper?.AddNativeLibraryProbingPaths(nativeLibraryProbingPaths);
-
-                        if (helper != null)
-                        {
-                            foreach (var addedReference in result.ResolvedReferences)
-                            {
-                                helper.Handle(addedReference);
-                            }
-                        }
-
                         kernel.AddScriptReferences(result.ResolvedReferences);
 
                         foreach (var resolvedReference in result.ResolvedReferences)
@@ -258,7 +245,7 @@ using static {typeof(Kernel).FullName};
                     {
                         var errors = $"{string.Join(Environment.NewLine, result.Errors)}";
 
-                       context.Fail(message: errors);
+                        context.Fail(message: errors);
                     }
                 };
 
@@ -338,7 +325,5 @@ using static {typeof(Kernel).FullName};
                 }
             }
         }
-
-    
     }
 }

@@ -35,8 +35,8 @@ type FSharpKernel() as this =
         do registerForDisposal(fun () -> script.ValueBound.RemoveHandler valueBoundHandler)
 
         let handler = new Handler<string> (fun o s -> resolvedAssemblies.Add(s))
-        do script.AssemblyReferenceAdded.AddHandler handler
-        do registerForDisposal(fun () -> do script.AssemblyReferenceAdded.RemoveHandler handler)
+        //do script.AssemblyReferenceAdded.AddHandler handler
+        //do registerForDisposal(fun () -> do script.AssemblyReferenceAdded.RemoveHandler handler)
         script
 
     let script = lazy createScript this.RegisterForDisposal
@@ -45,31 +45,31 @@ type FSharpKernel() as this =
 
     let messageMap = Dictionary<string, string>()
 
-    let parseReference text =
-        let reference, binLogPath = FSharpDependencyManager.parsePackageReference [text]
-        (reference |> List.tryHead), binLogPath
-
-    let packageInstallingMessages (refSpec: PackageReference option * string option option) =
-        let ref, binLogPath = refSpec
-        let versionText =
-            match ref with
-            | Some ref when ref.Version <> "*" -> ", version " + ref.Version
-            | _ -> ""
-
-        let installingMessage ref = "Installing package " + ref.Include + versionText + "."
-        let loggingMessage = "Binary Logging enabled"
-        [|
-            match ref, binLogPath with
-            | Some reference, Some _ ->
-                yield installingMessage reference
-                yield loggingMessage
-            | Some reference, None ->
-                yield installingMessage reference
-            | None, Some _ ->
-                yield loggingMessage
-            | None, None ->
-                ()
-        |]
+//    let parseReference text =
+//        let reference, binLogPath = FSharpDependencyManager.parsePackageReference [text]
+//        (reference |> List.tryHead), binLogPath
+//
+//    let packageInstallingMessages (refSpec: PackageReference option * string option option) =
+//        let ref, binLogPath = refSpec
+//        let versionText =
+//            match ref with
+//            | Some ref when ref.Version <> "*" -> ", version " + ref.Version
+//            | _ -> ""
+//
+//        let installingMessage ref = "Installing package " + ref.Include + versionText + "."
+//        let loggingMessage = "Binary Logging enabled"
+//        [|
+//            match ref, binLogPath with
+//            | Some reference, Some _ ->
+//                yield installingMessage reference
+//                yield loggingMessage
+//            | Some reference, None ->
+//                yield installingMessage reference
+//            | None, Some _ ->
+//                yield loggingMessage
+//            | None, None ->
+//                ()
+//        |]
 
     let getLineAndColumn (text: string) offset =
         let rec getLineAndColumn' i l c =
@@ -123,43 +123,43 @@ type FSharpKernel() as this =
 
     let handleSubmitCode (codeSubmission: SubmitCode) (context: KernelInvocationContext) =
         async {
-            use _ = script.Value.DependencyAdding
-                    |> Observable.subscribe (fun (key, referenceText) ->
-                        if key = "nuget" then
-                            let reference = parseReference referenceText
-                            for message in packageInstallingMessages reference do
-                                let key = message
-                                messageMap.[key] <- message
-                                context.Publish(DisplayedValueProduced(message, context.Command, valueId=key))
-                        ())
-
-            use _ = script.Value.DependencyAdded
-                    |> Observable.subscribe (fun (key, referenceText) ->
-                        if key = "nuget" then
-                            let reference = parseReference referenceText
-                            match reference with
-                            | Some ref, _ ->
-                                let packageRef = ResolvedPackageReference(ref.Include, packageVersion=ref.Version, assemblyPaths=[])
-                                context.Publish(PackageAdded(packageRef))
-                            | _ -> ()
-
-                            for key in packageInstallingMessages reference do
-                                match reference with
-                                | Some ref, _ ->
-                                    let packageRef = ResolvedPackageReference(ref.Include, packageVersion=ref.Version, assemblyPaths=[])
-                                    let message = "Installed package " + packageRef.PackageName + " version " + packageRef.PackageVersion
-                                    context.Publish(DisplayedValueUpdated(message, key))
-                                | _ -> ()
-                            ())
-
-            use _ = script.Value.DependencyFailed
-                    |> Observable.subscribe (fun (key, referenceText) ->
-                        if key = "nuget" then
-                            let reference = parseReference referenceText
-                            for key in packageInstallingMessages reference do
-                                let message = messageMap.[key] + "failed!"
-                                context.Publish(DisplayedValueUpdated(message, key))
-                            ())
+//            use _ = script.Value.DependencyAdding
+//                    |> Observable.subscribe (fun (key, referenceText) ->
+//                        if key = "nuget" then
+//                            let reference = parseReference referenceText
+//                            for message in packageInstallingMessages reference do
+//                                let key = message
+//                                messageMap.[key] <- message
+//                                context.Publish(DisplayedValueProduced(message, context.Command, valueId=key))
+//                        ())
+//
+//            use _ = script.Value.DependencyAdded
+//                    |> Observable.subscribe (fun (key, referenceText) ->
+//                        if key = "nuget" then
+//                            let reference = parseReference referenceText
+//                            match reference with
+//                            | Some ref, _ ->
+//                                let packageRef = ResolvedPackageReference(ref.Include, packageVersion=ref.Version, assemblyPaths=[])
+//                                context.Publish(PackageAdded(packageRef))
+//                            | _ -> ()
+//
+//                            for key in packageInstallingMessages reference do
+//                                match reference with
+//                                | Some ref, _ ->
+//                                    let packageRef = ResolvedPackageReference(ref.Include, packageVersion=ref.Version, assemblyPaths=[])
+//                                    let message = "Installed package " + packageRef.PackageName + " version " + packageRef.PackageVersion
+//                                    context.Publish(DisplayedValueUpdated(message, key))
+//                                | _ -> ()
+//                            ())
+//
+//            use _ = script.Value.DependencyFailed
+//                    |> Observable.subscribe (fun (key, referenceText) ->
+//                        if key = "nuget" then
+//                            let reference = parseReference referenceText
+//                            for key in packageInstallingMessages reference do
+//                                let message = messageMap.[key] + "failed!"
+//                                context.Publish(DisplayedValueUpdated(message, key))
+//                            ())
 
             let codeSubmissionReceived = CodeSubmissionReceived(codeSubmission)
             context.Publish(codeSubmissionReceived)
