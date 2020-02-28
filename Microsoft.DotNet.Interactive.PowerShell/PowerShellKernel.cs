@@ -17,6 +17,7 @@ using XPlot.Plotly;
 
 namespace Microsoft.DotNet.Interactive.PowerShell
 {
+    using Microsoft.DotNet.Interactive.Utility;
     using System.Management.Automation;
 
     public class PowerShellKernel : KernelBase
@@ -77,6 +78,11 @@ namespace Microsoft.DotNet.Interactive.PowerShell
             });
         }
         public override object GetVariable(string variableName)
+        {
+            throw new NotSupportedException();
+        }
+
+        public override void AddScriptReferences(IReadOnlyList<ResolvedPackageReference> assemblyPaths)
         {
             throw new NotSupportedException();
         }

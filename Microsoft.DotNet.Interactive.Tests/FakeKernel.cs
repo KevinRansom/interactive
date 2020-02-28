@@ -1,10 +1,10 @@
-﻿// Copyright (c) .NET Foundation and contributors. All rights reserved.
+// Copyright (c) .NET Foundation and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.DotNet.Interactive.Commands;
+using Microsoft.DotNet.Interactive.Utility;
 
 namespace Microsoft.DotNet.Interactive.Tests
 {
@@ -21,6 +21,12 @@ namespace Microsoft.DotNet.Interactive.Tests
         {
             throw new NotSupportedException();
         }
+        public override void AddScriptReferences(IReadOnlyList<ResolvedPackageReference> assemblyPaths)
+        {
+            throw new NotSupportedException();
+        }
+
+
         protected override Task HandleSubmitCode(SubmitCode command, KernelInvocationContext context)
         {
             Handle(command, context);
