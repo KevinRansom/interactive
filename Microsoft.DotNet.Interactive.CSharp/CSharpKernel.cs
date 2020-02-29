@@ -71,7 +71,7 @@ namespace Microsoft.DotNet.Interactive.CSharp
 
         public ScriptState ScriptState { get; private set; }
 
-        internal void AddScriptReferences(IReadOnlyList<ResolvedPackageReference> assemblyPaths)
+        public override void AddScriptReferences(IReadOnlyList<ResolvedPackageReference> assemblyPaths)
         {
             var references = assemblyPaths
                              .SelectMany(r => r.AssemblyPaths)

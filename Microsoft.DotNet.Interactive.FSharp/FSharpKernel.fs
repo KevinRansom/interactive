@@ -216,9 +216,12 @@ type FSharpKernel() as this =
             | Ok(Some(value)) -> Some (CurrentVariable(v, value.ReflectionType, value.ReflectionValue))
             | _ -> None)
 
+    override _.AddScriptReferences(assemblyPaths:IReadOnlyList<ResolvedPackageReference>) =
+        raise (new NotSupportedException())
+
     override _.HandleSubmitCode(command: SubmitCode, context: KernelInvocationContext): Task =
         handleSubmitCode command context |> Async.StartAsTask :> Task
-        
+
     override _.HandleRequestCompletion(command: RequestCompletion, context: KernelInvocationContext): Task =
         handleRequestCompletion command context |> Async.StartAsTask :> Task
 

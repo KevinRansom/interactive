@@ -168,6 +168,8 @@ namespace Microsoft.DotNet.Interactive
 
         public void AddDirective(Command command) => _submissionParser.AddDirective(command);
 
+        public abstract void AddScriptReferences(IReadOnlyList<ResolvedPackageReference> assemblyPaths);
+
         private class KernelOperation
         {
             public KernelOperation(IKernelCommand command, TaskCompletionSource<IKernelCommandResult> taskCompletionSource)
