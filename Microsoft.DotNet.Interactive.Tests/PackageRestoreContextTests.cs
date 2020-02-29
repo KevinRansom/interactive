@@ -119,14 +119,19 @@ namespace Microsoft.DotNet.Interactive.Tests
 
             var path = packageReference.AssemblyPaths.Single();
 
-            path.FullName
-                .ToLower()
-                .Should()
-                .EndWith("fluentassertions" + Path.DirectorySeparatorChar +
-                         "5.7.0" + Path.DirectorySeparatorChar +
-                         "lib" + Path.DirectorySeparatorChar +
-                         "netcoreapp2.0" + Path.DirectorySeparatorChar  +
-                         "fluentassertions.dll");
+            // path is a string similar to:
+            /// c:/users/someuser/.nuget/packages/fluentassertions/5.7.0/netcoreapp2.0/fluentassertions.dll
+            var name = path.Name;
+            var tfm = path.Directory.Name;
+            var reflib = path.Directory.Parent.Name;
+            var version = path.Directory.Parent.Parent.Name;
+            var packageName = path.Directory.Parent.Parent.Parent.Parent.Name;
+
+            name.ToLower().Should().Equals("fluentassertions.dll");
+            tfm.ToLower().Should().Equals("netcoreapp2.0");
+            reflib.ToLower().Should().Equals("lib");
+            version.ToLower().Should().Equals("5.7.0");
+            packageName.ToLower().Should().Equals("fluentassertions");
             path.Exists.Should().BeTrue();
         }
 
@@ -142,9 +147,10 @@ namespace Microsoft.DotNet.Interactive.Tests
 
             var path = packageReference.PackageRoot;
 
-            path.FullName
-                .Should()
-                .EndWith("fluentassertions" + Path.DirectorySeparatorChar + "5.7.0" );
+            var version = path.Name;
+            var packageName = path.Parent.Name;
+            version.ToLower().Should().Equals("5.7.0");
+            packageName.ToLower().Should().Equals("fluentassertions");
             path.Exists.Should().BeTrue();
         }
 

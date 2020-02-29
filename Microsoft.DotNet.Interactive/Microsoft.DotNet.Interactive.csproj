@@ -32,14 +32,16 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="FSharp.Compiler.Private.Scripting" Version="$(FSharpCompilerPrivateScriptingVersion)" />
   </ItemGroup>
 
-   <ItemGroup>	
-    <NuspecProperty Include="MicrosoftCodeAnalysisAnalyzersVersion=$(MicrosoftCodeAnalysisAnalyzersVersion)" />	
-    <NuspecProperty Include="SystemRuntimeLoaderVersion=$(SystemRuntimeLoaderVersion)" />	
-    <NuspecProperty Include="SystemReactiveVersion=$(SystemReactiveVersion)" />	
-    <NuspecProperty Include="SystemCommandLineVersion=$(SystemCommandLineVersion)" />	
-  </ItemGroup>
+   <ItemGroup>
+    <NuspecProperty Include="MicrosoftCodeAnalysisAnalyzersVersion=$(MicrosoftCodeAnalysisAnalyzersVersion)" />
+    <NuspecProperty Include="SystemRuntimeLoaderVersion=$(SystemRuntimeLoaderVersion)" />
+    <NuspecProperty Include="SystemReactiveVersion=$(SystemReactiveVersion)" />
+    <NuspecProperty Include="SystemCommandLineVersion=$(SystemCommandLineVersion)" />
+    <NuspecProperty Include="FSharpCompilerPrivateScriptingVersion=$(FSharpCompilerPrivateScriptingVersion)" />
+   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.DotNet.Interactive.Formatting\Microsoft.DotNet.Interactive.Formatting.csproj" />

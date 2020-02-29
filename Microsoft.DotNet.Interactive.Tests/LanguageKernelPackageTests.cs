@@ -181,7 +181,7 @@ json
         [InlineData(Language.CSharp, false)]
         [InlineData(Language.FSharp, false)]
         [InlineData(Language.CSharp, true)]
-        [InlineData(Language.FSharp, true, Skip = "oops")]
+        //[InlineData(Language.FSharp, true, Skip = "FSharp, relative is not relative to cwd.")]
         public async Task it_can_load_assembly_references_using_r_directive_with_relative_path(Language language, bool changeWorkingDirectory)
         {
             var workingDirectory = Directory.GetCurrentDirectory();
@@ -269,7 +269,7 @@ json
             using IKernel kernel = language switch
             {
                 Language.CSharp => new CompositeKernel { new CSharpKernel().UseNugetDirective() },
-                Language.FSharp => new CompositeKernel { new FSharpKernel() }
+                Language.FSharp => new CompositeKernel { new FSharpKernel().UseNugetDirective() }
             };
 
             var code = $@"
@@ -770,13 +770,8 @@ using XPlot.Plotly;");
 #r ""nuget:System.Text.Json, 4.6.0""
 using System.Text.Json;
 ");
-            // It should work, no errors and the requested package should be added
+            // It should work, no errors, System.Text.Json is part of the shared framework
             events.Should().NotContainErrors();
-
-            // The System.Text.JSon dll ships in : Microsoft.NETCore.App.Ref
-            events.OfType<PackageAdded>()
-                  .Should()
-                  .ContainSingle(e => e.PackageReference.PackageName == "Microsoft.NETCore.App.Ref");
         }
 
         [Fact]

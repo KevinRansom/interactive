@@ -61,8 +61,6 @@ namespace Microsoft.DotNet.Interactive.CSharp
         public CSharpKernel()
         {
             Name = DefaultKernelName;
-            NativeAssemblyLoadHelper = new NativeAssemblyLoadHelper(this);
-            RegisterForDisposal(NativeAssemblyLoadHelper);
             RegisterForDisposal(() =>
             {
                 ScriptState = null;
@@ -282,8 +280,6 @@ namespace Microsoft.DotNet.Interactive.CSharp
         private bool HasReturnValue =>
             ScriptState != null &&
             (bool)_hasReturnValueMethod.Invoke(ScriptState.Script, null);
-
-        internal NativeAssemblyLoadHelper NativeAssemblyLoadHelper { get; }
     }
 
 
