@@ -79,6 +79,7 @@ function DownloadPackageFromGithub {
     $dlfile = Join-Path $workdir $filename
 
     <# Download the package from github #>
+    Write-Host "Invoke-WebRequest $uri -OutFile $dlfile"
     Invoke-WebRequest $uri -OutFile $dlfile
 
     <# Unzip or Untar the package #>
@@ -87,7 +88,9 @@ function DownloadPackageFromGithub {
         $packageDir = Join-Path "$rootdir"  "$barename"
         Create-Directory $packageDir
         $tarfile = $dlfile + ".tar"
+        Write-Host "DeGZip-File $dlFile $tarfile"
         DeGZip-File $dlFile $tarfile
+        Write-Host "tar" "-zxf $tarfile  -C $packageDir"
         Exec-Process "tar" "-zxf $tarfile  -C $packageDir"
     }
     else {
