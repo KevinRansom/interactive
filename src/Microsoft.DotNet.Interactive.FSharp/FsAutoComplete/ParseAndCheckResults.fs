@@ -2,7 +2,7 @@ namespace FsAutoComplete
 
 open System
 open System.IO
-open FSharp.Compiler.SourceCodeServices
+open FSharp.Compiler.EditorServices
 open Utils
 open FSharp.Compiler
 open FSharp.Compiler.Text

@@ -24,7 +24,7 @@ open Microsoft.DotNet.Interactive.Extensions
 open Microsoft.DotNet.Interactive.FSharp.ScriptHelpers
 
 open FSharp.Compiler.Interactive.Shell
-open FSharp.Compiler.SourceCodeServices
+open FSharp.Compiler.EditorServices
 open FSharp.Compiler.Text.Pos
 open FsAutoComplete
 

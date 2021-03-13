@@ -1,13 +1,13 @@
 namespace FsAutoComplete
 
-open FSharp.Compiler.SourceCodeServices
+open FSharp.Compiler.EditorServices
 
 #nowarn "57"
 
 module internal KeywordList =
 
     let keywordDescriptions =
-        FSharp.Compiler.SourceCodeServices.FSharpKeywords.KeywordsWithDescription
+        FSharp.Compiler.EditorServices.FSharpKeywords.KeywordsWithDescription
         |> dict
 
     let keywordTooltips =

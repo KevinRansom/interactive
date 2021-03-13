@@ -9,7 +9,7 @@ open System.Text
 open System.Threading
 open FSharp.Compiler
 open FSharp.Compiler.Interactive.Shell
-open FSharp.Compiler.SourceCodeServices
+open FSharp.Compiler.EditorServices
 
 [<RequireQualifiedAccess>]
 type LangVersion =

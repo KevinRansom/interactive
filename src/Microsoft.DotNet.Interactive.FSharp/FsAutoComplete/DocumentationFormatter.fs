@@ -5,7 +5,7 @@ open System.Text.RegularExpressions
 module internal DocumentationFormatter =
 
     open FSharp.Compiler
-    open FSharp.Compiler.SourceCodeServices
+    open FSharp.Compiler.EditorServices
     open System
     open System.Text
 
