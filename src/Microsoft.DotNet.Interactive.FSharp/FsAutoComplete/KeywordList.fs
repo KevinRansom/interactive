@@ -1,10 +1,11 @@
 namespace FsAutoComplete
 
 open FSharp.Compiler.EditorServices
-open FSharp.Compiler.Text
-open FSharp.Compiler.Tokenization
 open FSharp.Compiler.Symbols
 open FSharp.Compiler.Syntax
+open FSharp.Compiler.Text
+open FSharp.Compiler.Tokenization
+open FSharp.Compiler.Xml
 
 #nowarn "57"
 
